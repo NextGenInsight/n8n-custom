@@ -9,3 +9,4 @@ RUN apt-get update && \
 EXPOSE 5678
 
 USER node
+CMD ["n8n"]
