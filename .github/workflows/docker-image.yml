@@ -18,9 +18,9 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Build and push Docker image to Azure Web App
+      - name: Build and deploy container to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: n8n-koreaeu-com
+          app-name: n8n-koreaeu-com-e6dxc4awgfctgqb3
           slot-name: Production
-          images: myregistry.azurecr.io/n8n-custom:latest
+          images: ghcr.io/${{ github.repository }}:latest
