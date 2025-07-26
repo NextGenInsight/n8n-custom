@@ -21,6 +21,6 @@ jobs:
       - name: Build and deploy container to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: n8n-koreaeu-com-e6dxc4awgfctgqb3
+          app-name: n8n-koreaeu-com
           slot-name: Production
           images: ghcr.io/${{ github.repository }}:latest
