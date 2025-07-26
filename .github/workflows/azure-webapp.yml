@@ -1,0 +1,26 @@
+name: Build and Deploy to Azure Web App
+
+on:
+  push:
+    branches:
+      - main  # ← main 브랜치에 push 될 때 실행
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build and Push Docker image to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: n8n-koreaeu-com  # 정확한 Web App 이름
+        images: n8n-custom:latest
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
