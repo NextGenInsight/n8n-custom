@@ -6,4 +6,6 @@ RUN apt-get update && \
     apt-get install -y ffmpeg curl && \
     apt-get clean
 
+EXPOSE 5678
+
 USER node
