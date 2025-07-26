@@ -21,3 +21,4 @@ USER node
 # n8n 실행
 CMD ["n8n"]
 
+# trigger deploy
