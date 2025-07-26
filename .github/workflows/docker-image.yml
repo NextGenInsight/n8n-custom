@@ -1,0 +1,26 @@
+name: Build and Deploy to Azure Web App - n8n-koreaeu-com
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build and push Docker image to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: n8n-koreaeu-com
+          slot-name: Production
+          images: myregistry.azurecr.io/n8n-custom:latest
