@@ -24,12 +24,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image to GHCR
+- name: Build and push Docker image to GHCR
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          images: ghcr.io/nextgeninsight/n8n-custom:latest
+          tags: ghcr.io/nextgeninsight/n8n-custom:latest  # ← 바로 이 키워드가 맞는 것
 
       - name: Log in to Azure
         uses: azure/login@v1
