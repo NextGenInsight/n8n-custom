@@ -11,7 +11,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # ← GitHub Packages (GHCR) 푸시용 권한
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -24,12 +24,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-- name: Build and push Docker image to GHCR
+      - name: Build and push Docker image to GHCR
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/nextgeninsight/n8n-custom:latest  # ← 바로 이 키워드가 맞는 것
+          tags: ghcr.io/nextgeninsight/n8n-custom:latest
 
       - name: Log in to Azure
         uses: azure/login@v1
