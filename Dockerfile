@@ -4,7 +4,9 @@ FROM n8nio/n8n:1.102.4
 USER root
 
 # 필요한 추가 패키지 설치 (예: ffmpeg, curl 등)
-RUN apt-get update && apt-get install -y ffmpeg curl && apt-get clean
+# Alpine 기반이므로 apk 사용
+RUN apk update && apk add --no-cache ffmpeg curl
+
 
 # 다시 node 사용자로 전환
 USER node
