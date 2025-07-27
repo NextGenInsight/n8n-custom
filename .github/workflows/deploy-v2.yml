@@ -1,0 +1,33 @@
+name: Deploy n8n-custom v2 to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Push Docker Image with v2 tag
+        run: |
+          docker build -t ghcr.io/NextGenInsight/n8n-custom:v2 .
+          docker push ghcr.io/NextGenInsight/n8n-custom:v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App with new image
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: n8n-koreaeu-com
+          images: ghcr.io/NextGenInsight/n8n-custom:v2
