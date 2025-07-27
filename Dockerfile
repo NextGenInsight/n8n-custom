@@ -1,12 +1,10 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:1.102.4
 
 # 필요한 도구 설치 (root 권한에서)
 USER root
 
-RUN apt-get update && \
-    apt-get install -y ffmpeg curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# 필요한 추가 패키지 설치 (예: ffmpeg, curl 등)
+RUN apt-get update && apt-get install -y ffmpeg curl && apt-get clean
 
 USER node
 
@@ -20,5 +18,3 @@ USER node
 
 # n8n 실행
 CMD ["n8n"]
-
-# trigger deploy
