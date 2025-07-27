@@ -23,4 +23,4 @@ jobs:
         with:
           app-name: n8n-koreaeu-com  # 정확한 Web App 리소스 이름
           slot-name: Production      # 기본 슬롯 (대소문자 중요하지 않지만 일관성 유지)
-          images: ghcr.io/${{ github.repository }}:latest
+          images: ghcr.io/nextgeninsight/n8n-custom:latest
