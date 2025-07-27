@@ -3,7 +3,7 @@ name: Build and Deploy to Azure Web App
 on:
   push:
     branches:
-      - main
+      - main  # main 브랜치에 push 될 때 실행
 
 jobs:
   build-and-deploy:
@@ -13,25 +13,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GHCR_TOKEN }}  # ← 반드시 PAT 기반 secret
+    # GitHub Container Registry 로그인
+    - name: Login to GitHub Container Registry
+      run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    - name: Build Docker image
-      run: docker build -t ghcr.io/nextgeninsight/n8n-custom:latest .
+    # Docker 이미지 빌드 및 푸시
+    - name: Build and Push Docker image
+      run: |
+        docker build -t ghcr.io/nextgeninsight/n8n-custom:latest .
+        docker push ghcr.io/nextgeninsight/n8n-custom:latest
 
-    - name: Push Docker image to GHCR
-      run: docker push ghcr.io/nextgeninsight/n8n-custom:latest
-
+    # Azure 로그인
     - name: Login to Azure
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy image to Azure Web App
+    # Azure Web App 배포
+    - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: n8n-koreaeu-com
