@@ -1,19 +1,19 @@
 FROM n8nio/n8n:1.102.4
 
-# 필요한 도구 설치 (root 권한에서)
+# 루트 권한으로 ffmpeg 및 curl 설치
 USER root
 
-# debian 기반이므로 apt 사용 (❗️apk 아님)
-RUN apt-get update && apt-get install -y ffmpeg curl && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Alpine 기반이므로 apk 사용 (Debian이 아님)
+RUN apk update && apk add --no-cache ffmpeg curl
 
+# OS 정보 출력 (빌드 로그에서 확인 가능)
+RUN cat /etc/os-release || uname -a
 
-# 다시 node 사용자로 전환
+# n8n 사용자로 복귀
 USER node
 
-# 포트 지정 (n8n 기본 포트)
+# 기본 포트 지정
 EXPOSE 5678
 
 # n8n 실행
 CMD ["n8n"]
-
-
