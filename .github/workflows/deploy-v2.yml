@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and Push Docker Image with v2 tag
         run: |
-          docker build -t ghcr.io/NextGenInsight/n8n-custom:v2 .
+          docker build -t ghcr.io/nextgeninsight/n8n-custom:v2 .
           docker push ghcr.io/nextgeninsight/n8n-custom:v2
 
       - name: Azure Login
