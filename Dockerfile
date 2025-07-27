@@ -15,4 +15,4 @@ USER node
 EXPOSE 5678
 
 # n8n 실행
-CMD ["n8n"]
+CMD ["sh", "-c", "n8n start --host=0.0.0.0 --port=$PORT"]
