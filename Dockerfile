@@ -3,9 +3,8 @@ FROM n8nio/n8n:1.102.4
 # 필요한 도구 설치 (root 권한에서)
 USER root
 
-# 필요한 추가 패키지 설치 (예: ffmpeg, curl 등)
-# Alpine 기반이므로 apk 사용
-RUN apk update && apk add --no-cache ffmpeg curl
+# debian 기반이므로 apt 사용 (❗️apk 아님)
+RUN apt-get update && apt-get install -y ffmpeg curl && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
 # 다시 node 사용자로 전환
@@ -15,4 +14,6 @@ USER node
 EXPOSE 5678
 
 # n8n 실행
-CMD ["sh", "-c", "n8n start --host=0.0.0.0 --port=$PORT"]
+CMD ["n8n"]
+
+
