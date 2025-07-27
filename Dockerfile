@@ -8,4 +8,5 @@ USER node
 
 EXPOSE 5678
 
-CMD ["n8n"]
+# ✅ 있어야 정상 작동
+CMD ["n8n", "start"]
